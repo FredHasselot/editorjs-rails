@@ -1,0 +1,18 @@
+fr:
+  editorjs_rails:
+    placeholder: "Commencez à écrire..."
+    tools:
+      text: "Texte"
+      heading: "Titre"
+      list: "Liste"
+      ordered_list: "Liste numérotée"
+      unordered_list: "Liste à puces"
+      checklist: "Checklist"
+      quote: "Citation"
+      delimiter: "Séparateur"
+      code: "Code"
+      table: "Tableau"
+      image: "Image"
+      warning: "Avertissement"
+    form:
+      label: "Contenu"

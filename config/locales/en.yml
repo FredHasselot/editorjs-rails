@@ -1,0 +1,18 @@
+en:
+  editorjs_rails:
+    placeholder: "Start writing..."
+    tools:
+      text: "Text"
+      heading: "Heading"
+      list: "List"
+      ordered_list: "Ordered List"
+      unordered_list: "Unordered List"
+      checklist: "Checklist"
+      quote: "Quote"
+      delimiter: "Delimiter"
+      code: "Code"
+      table: "Table"
+      image: "Image"
+      warning: "Warning"
+    form:
+      label: "Content"
