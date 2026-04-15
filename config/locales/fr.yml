@@ -44,6 +44,12 @@ fr:
         quote:
           enter_a_quote: "Saisissez une citation"
           enter_a_caption: "Auteur (optionnel)"
+        image:
+          select_an_image: "Sélectionnez une image"
+          with_border: "Avec bordure"
+          stretch_image: "Pleine largeur"
+          with_background: "Avec fond"
+          caption_placeholder: "Légende de l'image"
         link:
           add_a_link: "Ajouter un lien"
       block_tunes:

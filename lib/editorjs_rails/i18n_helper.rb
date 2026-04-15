@@ -62,6 +62,13 @@ module EditorjsRails
               "Enter a quote" => t.call("tools.quote.enter_a_quote"),
               "Enter a caption" => t.call("tools.quote.enter_a_caption")
             },
+            "image" => {
+              "Select an Image" => t.call("tools.image.select_an_image"),
+              "With border" => t.call("tools.image.with_border"),
+              "Stretch image" => t.call("tools.image.stretch_image"),
+              "With background" => t.call("tools.image.with_background"),
+              "Caption" => t.call("tools.image.caption_placeholder")
+            },
             "link" => {
               "Add a link" => t.call("tools.link.add_a_link")
             }
