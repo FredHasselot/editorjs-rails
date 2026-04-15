@@ -4,10 +4,11 @@ require "spec_helper"
 
 RSpec.describe EditorjsRails::Blocks::Image do
   describe "#to_html" do
-    it "renders figure with img" do
+    it "renders figure with img and default center alignment" do
       block = described_class.new(id: "1", type: "image", url: "https://example.com/img.jpg")
       html = block.to_html
-      expect(html).to include("<figure>")
+      expect(html).to include("<figure")
+      expect(html).to include("editorjs-image--center")
       expect(html).to include('<img src="https://example.com/img.jpg"')
     end
 
@@ -21,6 +22,18 @@ RSpec.describe EditorjsRails::Blocks::Image do
       html = block.to_html
       expect(html).to include("editorjs-image--bordered")
       expect(html).to include("editorjs-image--stretched")
+    end
+
+    it "supports alignment variants" do
+      %w[center left right float-left float-right full-width].each do |align|
+        block = described_class.new(id: "1", type: "image", url: "https://example.com/img.jpg", alignment: align)
+        expect(block.to_html).to include("editorjs-image--#{align}")
+      end
+    end
+
+    it "defaults to center for unknown alignment" do
+      block = described_class.new(id: "1", type: "image", url: "https://example.com/img.jpg", alignment: "garbage")
+      expect(block.to_html).to include("editorjs-image--center")
     end
 
     it "reads url from file hash" do
