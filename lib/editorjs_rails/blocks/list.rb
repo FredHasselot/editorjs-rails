@@ -31,7 +31,7 @@ module EditorjsRails
       def render_items(items)
         items.map do |item|
           if item.is_a?(Hash)
-            content = escape_html(item["content"] || item[:content] || "")
+            content = sanitize_inline(item["content"] || item[:content] || "")
             nested = item["items"] || item[:items] || []
             if nested.any?
               nested_tag = @style == "ordered" ? "ol" : "ul"
@@ -40,7 +40,7 @@ module EditorjsRails
               %(<li>#{content}</li>)
             end
           else
-            %(<li>#{escape_html(item)}</li>)
+            %(<li>#{sanitize_inline(item)}</li>)
           end
         end.join
       end

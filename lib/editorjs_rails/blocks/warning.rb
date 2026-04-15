@@ -13,8 +13,8 @@ module EditorjsRails
 
       def to_html
         html = %(<div class="editorjs-warning">)
-        html += %(<strong>#{escape_html(title)}</strong>) unless @title.strip.empty?
-        html += %(<p>#{escape_html(message)}</p>) unless @message.strip.empty?
+        html += %(<strong>#{sanitize_inline(title)}</strong>) unless @title.strip.empty?
+        html += %(<p>#{sanitize_inline(message)}</p>) unless @message.strip.empty?
         html += %(</div>)
         html
       end

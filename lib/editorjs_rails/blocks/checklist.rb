@@ -19,7 +19,7 @@ module EditorjsRails
       def to_html
         items_html = @items.map do |item|
           checked = item[:checked] ? " checked" : ""
-          %(<li><input type="checkbox" disabled#{checked}> #{escape_html(item[:text])}</li>)
+          %(<li><input type="checkbox" disabled#{checked}> #{sanitize_inline(item[:text])}</li>)
         end.join
         %(<ul class="editorjs-checklist">#{items_html}</ul>)
       end

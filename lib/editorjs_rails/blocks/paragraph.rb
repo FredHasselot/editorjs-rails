@@ -11,7 +11,7 @@ module EditorjsRails
       end
 
       def to_html
-        %(<p>#{escape_html(text)}</p>)
+        %(<p>#{sanitize_inline(text)}</p>)
       end
 
       private

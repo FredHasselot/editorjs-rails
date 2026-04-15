@@ -13,8 +13,8 @@ module EditorjsRails
       end
 
       def to_html
-        html = %(<blockquote>#{escape_html(text)})
-        html += %(<cite>#{escape_html(caption)}</cite>) unless @caption.strip.empty?
+        html = %(<blockquote>#{sanitize_inline(text)})
+        html += %(<cite>#{sanitize_inline(caption)}</cite>) unless @caption.strip.empty?
         html += %(</blockquote>)
         html
       end

@@ -17,9 +17,15 @@ RSpec.describe EditorjsRails::Blocks::Header do
       end
     end
 
-    it "escapes HTML" do
+    it "allows inline HTML" do
       block = described_class.new(id: "1", type: "header", text: "<b>bold</b>", level: 1)
-      expect(block.to_html).to include("&lt;b&gt;")
+      expect(block.to_html).to include("<b>bold</b>")
+    end
+
+    it "strips dangerous tags" do
+      block = described_class.new(id: "1", type: "header", text: "<script>x</script>Title", level: 1)
+      expect(block.to_html).not_to include("<script>")
+      expect(block.to_html).to include("Title")
     end
   end
 

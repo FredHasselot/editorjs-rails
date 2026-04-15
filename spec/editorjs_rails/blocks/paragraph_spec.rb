@@ -12,10 +12,15 @@ RSpec.describe EditorjsRails::Blocks::Paragraph do
       expect(subject.to_html).to eq("<p>Hello world</p>")
     end
 
-    it "escapes HTML in text" do
+    it "strips dangerous tags but allows inline HTML" do
       block = described_class.new(id: "1", type: "paragraph", text: "<script>alert('xss')</script>")
       expect(block.to_html).not_to include("<script>")
-      expect(block.to_html).to include("&lt;script&gt;")
+    end
+
+    it "preserves allowed inline tags" do
+      block = described_class.new(id: "1", type: "paragraph", text: "<b>bold</b> and <i>italic</i>")
+      expect(block.to_html).to include("<b>bold</b>")
+      expect(block.to_html).to include("<i>italic</i>")
     end
   end
 

@@ -1,10 +1,15 @@
 # frozen_string_literal: true
 
 require "erb"
+require "action_view/helpers/sanitize_helper"
 
 module EditorjsRails
   module Blocks
     class Base
+      include ActionView::Helpers::SanitizeHelper
+
+      ALLOWED_INLINE_TAGS = %w[b i em strong a br mark code s u sup sub span].freeze
+
       attr_reader :id, :type, :errors
 
       def initialize(id:, type:, **_data)
@@ -37,6 +42,13 @@ module EditorjsRails
         raise NotImplementedError, "#{self.class}#data_to_h must be implemented"
       end
 
+      # Sanitize inline HTML — allows bold, italic, links, br, etc.
+      # Blocks script, iframe, and other dangerous tags.
+      def sanitize_inline(str)
+        sanitize(str.to_s, tags: ALLOWED_INLINE_TAGS, attributes: %w[href target rel class])
+      end
+
+      # Full escape — no HTML allowed (for code blocks, etc.)
       def escape_html(str)
         ERB::Util.h(str.to_s)
       end
