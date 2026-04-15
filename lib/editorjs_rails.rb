@@ -17,6 +17,7 @@ require_relative "editorjs_rails/document"
 require_relative "editorjs_rails/configuration"
 require_relative "editorjs_rails/helper"
 require_relative "editorjs_rails/form_builder"
+require_relative "editorjs_rails/i18n_helper"
 
 module EditorjsRails
   class << self

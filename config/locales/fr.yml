@@ -1,18 +1,54 @@
 fr:
   editorjs_rails:
     placeholder: "Commencez à écrire..."
-    tools:
-      text: "Texte"
-      heading: "Titre"
-      list: "Liste"
-      ordered_list: "Liste numérotée"
-      unordered_list: "Liste à puces"
-      checklist: "Checklist"
-      quote: "Citation"
-      delimiter: "Séparateur"
-      code: "Code"
-      table: "Tableau"
-      image: "Image"
-      warning: "Avertissement"
     form:
       label: "Contenu"
+    i18n:
+      ui:
+        block_tunes:
+          toggler: "Paramètres du bloc"
+        inline_toolbar:
+          converter: "Convertir en"
+        toolbar:
+          toolbox: "Ajouter"
+          popover:
+            filter: "Filtrer"
+            nothing_found: "Aucun résultat"
+      tool_names:
+        text: "Texte"
+        heading: "Titre"
+        list: "Liste"
+        ordered_list: "Liste numérotée"
+        unordered_list: "Liste à puces"
+        checklist: "Liste à cocher"
+        quote: "Citation"
+        delimiter: "Séparateur"
+        code: "Code"
+        table: "Tableau"
+        image: "Image"
+        warning: "Avertissement"
+        bold: "Gras"
+        italic: "Italique"
+        link: "Lien"
+        marker: "Surligneur"
+      tools:
+        header:
+          heading_2: "Titre 2"
+          heading_3: "Titre 3"
+          heading_4: "Titre 4"
+        list:
+          ordered: "Numérotée"
+          unordered: "À puces"
+          start_with: "Commencer à"
+          counter_type: "Type de numérotation"
+        quote:
+          enter_a_quote: "Saisissez une citation"
+          enter_a_caption: "Auteur (optionnel)"
+        link:
+          add_a_link: "Ajouter un lien"
+      block_tunes:
+        delete:
+          delete: "Supprimer"
+          click_to_delete: "Cliquer pour confirmer"
+        move_up: "Monter"
+        move_down: "Descendre"

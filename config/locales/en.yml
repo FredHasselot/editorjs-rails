@@ -1,18 +1,54 @@
 en:
   editorjs_rails:
     placeholder: "Start writing..."
-    tools:
-      text: "Text"
-      heading: "Heading"
-      list: "List"
-      ordered_list: "Ordered List"
-      unordered_list: "Unordered List"
-      checklist: "Checklist"
-      quote: "Quote"
-      delimiter: "Delimiter"
-      code: "Code"
-      table: "Table"
-      image: "Image"
-      warning: "Warning"
     form:
       label: "Content"
+    i18n:
+      ui:
+        block_tunes:
+          toggler: "Click to tune"
+        inline_toolbar:
+          converter: "Convert to"
+        toolbar:
+          toolbox: "Add"
+          popover:
+            filter: "Filter"
+            nothing_found: "Nothing found"
+      tool_names:
+        text: "Text"
+        heading: "Heading"
+        list: "List"
+        ordered_list: "Ordered List"
+        unordered_list: "Unordered List"
+        checklist: "Checklist"
+        quote: "Quote"
+        delimiter: "Delimiter"
+        code: "Code"
+        table: "Table"
+        image: "Image"
+        warning: "Warning"
+        bold: "Bold"
+        italic: "Italic"
+        link: "Link"
+        marker: "Marker"
+      tools:
+        header:
+          heading_2: "Heading 2"
+          heading_3: "Heading 3"
+          heading_4: "Heading 4"
+        list:
+          ordered: "Ordered"
+          unordered: "Unordered"
+          start_with: "Start with"
+          counter_type: "Counter type"
+        quote:
+          enter_a_quote: "Enter a quote"
+          enter_a_caption: "Enter a caption"
+        link:
+          add_a_link: "Add a link"
+      block_tunes:
+        delete:
+          delete: "Delete"
+          click_to_delete: "Click to delete"
+        move_up: "Move up"
+        move_down: "Move down"
