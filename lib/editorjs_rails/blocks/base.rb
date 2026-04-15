@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require "erb"
-require "action_view/helpers/sanitize_helper"
+require "rails-html-sanitizer"
 
 module EditorjsRails
   module Blocks
     class Base
-      include ActionView::Helpers::SanitizeHelper
-
       ALLOWED_INLINE_TAGS = %w[b i em strong a br mark code s u sup sub span].freeze
+      ALLOWED_ATTRIBUTES = %w[href target rel class].freeze
 
       attr_reader :id, :type, :errors
 
@@ -45,7 +44,11 @@ module EditorjsRails
       # Sanitize inline HTML — allows bold, italic, links, br, etc.
       # Blocks script, iframe, and other dangerous tags.
       def sanitize_inline(str)
-        sanitize(str.to_s, tags: ALLOWED_INLINE_TAGS, attributes: %w[href target rel class])
+        Rails::HTML5::SafeListSanitizer.new.sanitize(
+          str.to_s,
+          tags: ALLOWED_INLINE_TAGS,
+          attributes: ALLOWED_ATTRIBUTES
+        )
       end
 
       # Full escape — no HTML allowed (for code blocks, etc.)
