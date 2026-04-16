@@ -14,6 +14,7 @@ module EditorjsRails
 
       def to_html
         html = %(<blockquote>#{sanitize_inline(text)})
+        html += %(<span class="ce-closing-quote">\u201D</span>)
         html += %(<cite>#{sanitize_inline(caption)}</cite>) unless @caption.strip.empty?
         html += %(</blockquote>)
         html
