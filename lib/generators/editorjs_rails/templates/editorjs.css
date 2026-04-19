@@ -143,3 +143,419 @@
   outline: none;
   box-shadow: 0 0 0 2px var(--editorjs-selection);
 }
+
+/* ─── Editorial blocks — shared ──────────────────────────────────
+ *
+ * Editorial blocks opt-in via `config.register_block(...)` in the host app.
+ * Each block uses the pattern `.editorjs-{name} .editorjs-{name}--{variant}`.
+ * Host apps override fonts via `--editorjs-font-display` / `--editorjs-font-body`.
+ */
+
+:root {
+  --editorjs-font-display: var(--font-heading, Georgia, "Times New Roman", serif);
+  --editorjs-font-body: var(--font-body, -apple-system, BlinkMacSystemFont, sans-serif);
+  /* Optional italic display font used by editorial blocks (pull quotes). */
+  --editorjs-font-italic: var(--editorjs-font-display);
+  --editorjs-accent: #eb5247;
+}
+
+/* ─── HeroSplit ─────────────────────────────────────────────────── */
+
+.editorjs-hero-split {
+  margin: 3rem 0;
+  display: grid;
+  gap: 1.5rem;
+}
+
+.editorjs-hero-split__title {
+  font-family: var(--editorjs-font-display);
+  font-weight: 400;
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin: 0;
+}
+
+.editorjs-hero-split__figure {
+  margin: 0;
+  display: block;
+}
+
+.editorjs-hero-split__figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.editorjs-hero-split__credit {
+  font-family: var(--editorjs-font-body);
+  font-size: 0.75rem;
+  color: var(--editorjs-text-secondary);
+  margin-top: 0.5rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Variant: title above (default) */
+.editorjs-hero-split--title-above {
+  grid-template-columns: 1fr;
+}
+
+/* Variant: title left (60%), image right (40%) */
+.editorjs-hero-split--title-right {
+  grid-template-columns: 3fr 2fr;
+  align-items: center;
+  gap: 2.5rem;
+}
+.editorjs-hero-split--title-right .editorjs-hero-split__title {
+  font-size: clamp(2rem, 4.5vw, 4rem);
+}
+
+/* Variant: image full-width with title overlaid */
+.editorjs-hero-split--title-overlap {
+  position: relative;
+  grid-template-columns: 1fr;
+}
+.editorjs-hero-split--title-overlap .editorjs-hero-split__figure {
+  position: relative;
+}
+.editorjs-hero-split--title-overlap .editorjs-hero-split__figure::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.7) 100%);
+  pointer-events: none;
+}
+.editorjs-hero-split--title-overlap .editorjs-hero-split__title {
+  position: absolute;
+  left: 2rem;
+  right: 2rem;
+  bottom: 2rem;
+  color: #ffffff;
+  z-index: 1;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+}
+.editorjs-hero-split--title-overlap .editorjs-hero-split__credit {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  z-index: 1;
+}
+
+/* Mobile: every variant collapses to title-above pattern */
+@media (max-width: 640px) {
+  .editorjs-hero-split--title-right {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .editorjs-hero-split--title-overlap .editorjs-hero-split__title {
+    position: static;
+    color: inherit;
+    left: auto; right: auto; bottom: auto;
+    padding: 0.75rem 0;
+  }
+  .editorjs-hero-split--title-overlap .editorjs-hero-split__figure::after {
+    display: none;
+  }
+  .editorjs-hero-split--title-overlap .editorjs-hero-split__credit {
+    position: static;
+    color: var(--editorjs-text-secondary);
+  }
+}
+
+/* ─── DropCapParagraph ──────────────────────────────────────────── */
+
+.editorjs-drop-cap {
+  margin: 1.5rem 0;
+  font-family: var(--editorjs-font-body);
+  line-height: 1.6;
+}
+
+.editorjs-drop-cap__letter {
+  float: left;
+  line-height: 0.85;
+  padding: 0.25rem 0.5rem 0 0;
+  font-weight: 600;
+}
+
+.editorjs-drop-cap--serif-color .editorjs-drop-cap__letter {
+  font-family: var(--editorjs-font-display);
+  font-size: 4.5em;
+  color: var(--editorjs-accent);
+  font-weight: 400;
+}
+
+.editorjs-drop-cap--sans-plain .editorjs-drop-cap__letter {
+  font-family: var(--editorjs-font-body);
+  font-size: 3.5em;
+  color: inherit;
+}
+
+@media (max-width: 640px) {
+  .editorjs-drop-cap--serif-color .editorjs-drop-cap__letter {
+    font-size: 3.5em;
+  }
+  .editorjs-drop-cap--sans-plain .editorjs-drop-cap__letter {
+    font-size: 2.75em;
+  }
+}
+
+/* ─── PullQuote ────────────────────────────────────────────────── */
+
+.editorjs-pull-quote {
+  margin: 3rem auto;
+  max-width: 42rem;
+  padding: 0;
+}
+
+.editorjs-pull-quote__text {
+  margin: 0;
+  font-family: var(--editorjs-font-display);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.3;
+}
+
+.editorjs-pull-quote__attribution {
+  margin-top: 0.75rem;
+  font-family: var(--editorjs-font-body);
+  font-size: 0.8125rem;
+  color: var(--editorjs-text-secondary);
+  letter-spacing: 0.04em;
+}
+
+/* Variant: colored panel */
+.editorjs-pull-quote--colored-panel {
+  background: var(--editorjs-accent);
+  color: #ffffff;
+  padding: 2rem 2.5rem;
+  border-radius: 0.75rem;
+}
+.editorjs-pull-quote--colored-panel .editorjs-pull-quote__attribution {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Variant: big decorative quotes */
+.editorjs-pull-quote--big-quotes {
+  text-align: center;
+  padding: 1.5rem 0;
+  position: relative;
+}
+.editorjs-pull-quote--big-quotes::before,
+.editorjs-pull-quote--big-quotes::after {
+  content: "\201C";
+  font-family: var(--editorjs-font-display);
+  font-size: 6rem;
+  line-height: 0.8;
+  color: var(--editorjs-accent);
+  display: block;
+}
+.editorjs-pull-quote--big-quotes::after {
+  content: "\201D";
+  text-align: right;
+}
+.editorjs-pull-quote--big-quotes .editorjs-pull-quote__text {
+  font-family: var(--editorjs-font-italic);
+  font-style: italic;
+}
+
+/* Variant: left vertical rule */
+.editorjs-pull-quote--left-border {
+  padding-left: 1.5rem;
+  border-left: 4px solid var(--editorjs-accent);
+}
+.editorjs-pull-quote--left-border .editorjs-pull-quote__text {
+  font-family: var(--editorjs-font-italic);
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .editorjs-pull-quote--colored-panel {
+    padding: 1.5rem 1.25rem;
+  }
+  .editorjs-pull-quote--big-quotes::before,
+  .editorjs-pull-quote--big-quotes::after {
+    font-size: 4rem;
+  }
+}
+
+/* ─── ImageWithCaption ──────────────────────────────────────── */
+
+.editorjs-image-caption {
+  margin: 2rem 0;
+}
+
+.editorjs-image-caption img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.editorjs-image-caption__figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.editorjs-image-caption__caption {
+  font-family: var(--editorjs-font-body);
+}
+
+.editorjs-image-caption__credit {
+  font-size: 0.75rem;
+  color: var(--editorjs-text-secondary);
+}
+
+/* Variant: below, small caps */
+.editorjs-image-caption--below-small-caps .editorjs-image-caption__figcaption {
+  margin-top: 0.75rem;
+}
+.editorjs-image-caption--below-small-caps .editorjs-image-caption__caption {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--editorjs-text-secondary);
+}
+.editorjs-image-caption--below-small-caps .editorjs-image-caption__credit {
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Variant: side caption */
+.editorjs-image-caption--side {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+.editorjs-image-caption--side .editorjs-image-caption__figcaption {
+  align-self: center;
+  font-size: 0.875rem;
+}
+
+/* Variant: overlay */
+.editorjs-image-caption--overlay {
+  position: relative;
+}
+.editorjs-image-caption--overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.75) 100%);
+  pointer-events: none;
+}
+.editorjs-image-caption--overlay .editorjs-image-caption__figcaption {
+  position: absolute;
+  left: 1.5rem;
+  right: 1.5rem;
+  bottom: 1.25rem;
+  color: #ffffff;
+  z-index: 1;
+}
+.editorjs-image-caption--overlay .editorjs-image-caption__credit {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 640px) {
+  .editorjs-image-caption--side {
+    grid-template-columns: 1fr;
+  }
+  .editorjs-image-caption--overlay::after {
+    display: none;
+  }
+  .editorjs-image-caption--overlay .editorjs-image-caption__figcaption {
+    position: static;
+    color: inherit;
+    left: auto; right: auto; bottom: auto;
+    margin-top: 0.75rem;
+  }
+  .editorjs-image-caption--overlay .editorjs-image-caption__credit {
+    color: var(--editorjs-text-secondary);
+  }
+}
+
+/* ─── AsymmetricGallery ───────────────────────────────────────── */
+
+.editorjs-gallery {
+  margin: 2.5rem 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.editorjs-gallery__item {
+  margin: 0;
+  display: block;
+}
+
+.editorjs-gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.editorjs-gallery__caption {
+  font-size: 0.75rem;
+  color: var(--editorjs-text-secondary);
+  margin-top: 0.375rem;
+  letter-spacing: 0.04em;
+}
+
+/* Variant: triptyque — 1 large + 2 stacked */
+.editorjs-gallery--triptyque {
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-auto-flow: column;
+}
+.editorjs-gallery--triptyque .editorjs-gallery__item--0 {
+  grid-row: span 2;
+}
+
+/* Variant: duo-offset — 2 images, second offset down */
+.editorjs-gallery--duo-offset {
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+  gap: 1.5rem;
+}
+.editorjs-gallery--duo-offset .editorjs-gallery__item--0 {
+  margin-top: 2rem;
+}
+.editorjs-gallery--duo-offset .editorjs-gallery__item--1 {
+  margin-bottom: 2rem;
+}
+
+/* Variant: collage-rotated — 3 or 4 images with subtle rotations */
+.editorjs-gallery--collage-rotated {
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  padding: 1.5rem;
+  overflow: hidden;
+}
+.editorjs-gallery--collage-rotated .editorjs-gallery__item {
+  transform-origin: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+.editorjs-gallery--collage-rotated .editorjs-gallery__item--0 { transform: rotate(-2deg); }
+.editorjs-gallery--collage-rotated .editorjs-gallery__item--1 { transform: rotate(1.5deg) translateY(-0.5rem); }
+.editorjs-gallery--collage-rotated .editorjs-gallery__item--2 { transform: rotate(-1deg) translateY(0.5rem); }
+.editorjs-gallery--collage-rotated .editorjs-gallery__item--3 { transform: rotate(2deg); }
+
+@media (max-width: 640px) {
+  .editorjs-gallery--triptyque,
+  .editorjs-gallery--duo-offset,
+  .editorjs-gallery--collage-rotated {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-auto-flow: row;
+    padding: 0;
+  }
+  .editorjs-gallery--triptyque .editorjs-gallery__item--0 { grid-row: auto; }
+  .editorjs-gallery--duo-offset .editorjs-gallery__item--0,
+  .editorjs-gallery--duo-offset .editorjs-gallery__item--1 {
+    margin: 0;
+  }
+  .editorjs-gallery--collage-rotated .editorjs-gallery__item {
+    transform: none;
+    box-shadow: none;
+  }
+}
