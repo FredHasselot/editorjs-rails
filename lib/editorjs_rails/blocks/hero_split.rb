@@ -12,7 +12,7 @@ module EditorjsRails
 
       variants %w[title-above title-right title-overlap], default: "title-above"
 
-      attr_reader :title, :title_tag, :image_url, :image_alt, :image_credit, :image_id
+      attr_reader :title, :title_tag, :image_url, :image_alt, :image_caption, :image_credit, :image_id
 
       TITLE_TAGS = %w[h1 h2].freeze
 
@@ -23,6 +23,7 @@ module EditorjsRails
         image_data = image.is_a?(Hash) ? image : {}
         @image_url = (image_data[:url] || image_data["url"]).to_s
         @image_alt = (image_data[:alt] || image_data["alt"]).to_s
+        @image_caption = (image_data[:caption] || image_data["caption"]).to_s
         @image_credit = (image_data[:credit] || image_data["credit"]).to_s
         @image_id = image_data[:id] || image_data["id"]
       end
@@ -49,6 +50,7 @@ module EditorjsRails
         id_attr = @image_id ? %( data-image-id="#{escape_html(@image_id)}") : ""
         figure = %(<figure class="#{BASE_CLASS}__figure">)
         figure += %(<img src="#{escape_html(@image_url)}" alt="#{escape_html(@image_alt)}"#{id_attr}>)
+        figure += %(<figcaption class="#{BASE_CLASS}__caption">#{sanitize_inline(@image_caption)}</figcaption>) unless @image_caption.strip.empty?
         figure += %(<figcaption class="#{BASE_CLASS}__credit">#{sanitize_inline(@image_credit)}</figcaption>) unless @image_credit.strip.empty?
         figure += %(</figure>)
         figure
@@ -61,7 +63,7 @@ module EditorjsRails
       end
 
       def data_to_h
-        image = { url: @image_url, alt: @image_alt, credit: @image_credit }
+        image = { url: @image_url, alt: @image_alt, caption: @image_caption, credit: @image_credit }
         image[:id] = @image_id if @image_id
         {
           variant: @variant,

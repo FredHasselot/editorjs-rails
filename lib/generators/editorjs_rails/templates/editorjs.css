@@ -187,13 +187,25 @@
   display: block;
 }
 
+.editorjs-hero-split__caption {
+  font-family: var(--editorjs-font-body);
+  font-size: 0.875rem;
+  margin-top: 0.625rem;
+  line-height: 1.5;
+  font-style: italic;
+}
+
 .editorjs-hero-split__credit {
   font-family: var(--editorjs-font-body);
   font-size: 0.75rem;
   color: var(--editorjs-text-secondary);
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+}
+
+[data-editorial-block] figcaption[hidden] {
+  display: none !important;
 }
 
 /* Variant: title above (default) */

@@ -53,8 +53,22 @@ RSpec.describe EditorjsRails::Blocks::HeroSplit do
       expect(block.to_html).to include(%(<figcaption class="editorjs-hero-split__credit">© Me</figcaption>))
     end
 
-    it "omits the figcaption when credit is blank" do
-      img = image.merge(credit: "")
+    it "includes the caption inside its own figcaption when present" do
+      img = image.merge(caption: "A caption")
+      block = described_class.new(id: "1", type: "hero_split", title: "T", image: img)
+      expect(block.to_html).to include(%(<figcaption class="editorjs-hero-split__caption">A caption</figcaption>))
+    end
+
+    it "renders caption before credit" do
+      img = image.merge(caption: "Caption text")
+      block = described_class.new(id: "1", type: "hero_split", title: "T", image: img)
+      caption_pos = block.to_html.index("editorjs-hero-split__caption")
+      credit_pos = block.to_html.index("editorjs-hero-split__credit")
+      expect(caption_pos).to be < credit_pos
+    end
+
+    it "omits the figcaption when credit and caption are blank" do
+      img = image.merge(credit: "", caption: "")
       block = described_class.new(id: "1", type: "hero_split", title: "T", image: img)
       expect(block.to_html).not_to include("<figcaption")
     end
