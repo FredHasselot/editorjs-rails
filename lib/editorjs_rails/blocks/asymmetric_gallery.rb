@@ -40,7 +40,10 @@ module EditorjsRails
 
       def figure_html(img, index)
         id_attr = img[:id] ? %( data-image-id="#{escape_html(img[:id])}") : ""
-        figure = %(<figure class="#{BASE_CLASS}__item #{BASE_CLASS}__item--#{index}">)
+        classes = ["#{BASE_CLASS}__item", "#{BASE_CLASS}__item--#{index}"]
+        classes << "editorjs-image--bordered" if img[:bordered]
+        classes << "editorjs-image--background" if img[:background]
+        figure = %(<figure class="#{classes.join(' ')}">)
         figure += %(<img src="#{escape_html(img[:url])}" alt="#{escape_html(img[:alt])}"#{id_attr}>)
         figure += %(<figcaption class="#{BASE_CLASS}__caption">#{sanitize_inline(img[:caption])}</figcaption>) unless img[:caption].strip.empty?
         figure += %(</figure>)
@@ -52,11 +55,17 @@ module EditorjsRails
         payload = {
           url: (data[:url] || data["url"]).to_s,
           alt: (data[:alt] || data["alt"]).to_s,
-          caption: (data[:caption] || data["caption"]).to_s
+          caption: (data[:caption] || data["caption"]).to_s,
+          bordered: truthy?(data[:bordered] || data["bordered"]),
+          background: truthy?(data[:background] || data["background"])
         }
         id = data[:id] || data["id"]
         payload[:id] = id if id
         payload
+      end
+
+      def truthy?(value)
+        value == true || value == "true" || value == 1 || value == "1"
       end
 
       def validate

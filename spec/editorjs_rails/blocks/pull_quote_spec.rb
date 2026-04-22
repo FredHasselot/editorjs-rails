@@ -5,7 +5,7 @@ require "spec_helper"
 RSpec.describe EditorjsRails::Blocks::PullQuote do
   describe ".variants" do
     it "declares the three editorial variants" do
-      expect(described_class.variants).to eq(%w[colored-panel big-quotes left-border])
+      expect(described_class.variants).to eq(%w[colored-panel oversized-quote minimal-border])
     end
 
     it "defaults to colored-panel" do
@@ -22,8 +22,8 @@ RSpec.describe EditorjsRails::Blocks::PullQuote do
     end
 
     it "respects a valid variant" do
-      block = described_class.new(id: "1", type: "pull_quote", text: "Q", variant: "big-quotes")
-      expect(block.to_html).to include("editorjs-pull-quote--big-quotes")
+      block = described_class.new(id: "1", type: "pull_quote", text: "Q", variant: "oversized-quote")
+      expect(block.to_html).to include("editorjs-pull-quote--oversized-quote")
     end
 
     it "includes the attribution when present" do

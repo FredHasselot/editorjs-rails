@@ -4,13 +4,13 @@ module EditorjsRails
   module Blocks
     # Editorial pull quote — a standout quotation outside the main text flow.
     # Three visual variants:
-    #   - colored-panel : coloured background block with white text
-    #   - big-quotes    : oversize decorative serif quote marks flanking the text
-    #   - left-border   : thick coloured vertical rule on the left, italic text
+    #   - colored-panel   : filled accent-coloured background, white text, medium weight
+    #   - oversized-quote : oversized decorative serif quote mark behind the text (magazine feel)
+    #   - minimal-border  : thick coloured left border only, italic serif text, no fill
     class PullQuote < Base
       BASE_CLASS = "editorjs-pull-quote"
 
-      variants %w[colored-panel big-quotes left-border], default: "colored-panel"
+      variants %w[colored-panel oversized-quote minimal-border], default: "colored-panel"
 
       attr_reader :text, :attribution
 

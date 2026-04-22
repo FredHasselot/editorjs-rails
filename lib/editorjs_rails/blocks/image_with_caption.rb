@@ -12,7 +12,7 @@ module EditorjsRails
 
       variants %w[below-small-caps side overlay], default: "below-small-caps"
 
-      attr_reader :image_url, :image_alt, :image_id, :caption, :credit
+      attr_reader :image_url, :image_alt, :image_id, :image_bordered, :image_background, :caption, :credit
 
       def initialize(id:, type:, image: nil, caption: "", credit: "", variant: nil, **_rest)
         super(id: id, type: type, variant: variant)
@@ -20,13 +20,19 @@ module EditorjsRails
         @image_url = (image_data[:url] || image_data["url"]).to_s
         @image_alt = (image_data[:alt] || image_data["alt"]).to_s
         @image_id = image_data[:id] || image_data["id"]
+        @image_bordered = truthy?(image_data[:bordered] || image_data["bordered"])
+        @image_background = truthy?(image_data[:background] || image_data["background"])
         @caption = caption.to_s
         @credit = credit.to_s
       end
 
       def to_html
         id_attr = @image_id ? %( data-image-id="#{escape_html(@image_id)}") : ""
-        html = %(<figure class="#{variant_class(BASE_CLASS)}" data-editorial-block="image_with_caption" data-variant="#{escape_html(@variant)}">)
+        modifier_classes = []
+        modifier_classes << "editorjs-image--bordered" if @image_bordered
+        modifier_classes << "editorjs-image--background" if @image_background
+        class_attr = [variant_class(BASE_CLASS), *modifier_classes].join(" ")
+        html = %(<figure class="#{class_attr}" data-editorial-block="image_with_caption" data-variant="#{escape_html(@variant)}">)
         html += %(<img src="#{escape_html(@image_url)}" alt="#{escape_html(@image_alt)}"#{id_attr}>)
         html += caption_html
         html += %(</figure>)
@@ -50,7 +56,10 @@ module EditorjsRails
       end
 
       def data_to_h
-        image = { url: @image_url, alt: @image_alt }
+        image = {
+          url: @image_url, alt: @image_alt,
+          bordered: @image_bordered, background: @image_background
+        }
         image[:id] = @image_id if @image_id
         {
           variant: @variant,
@@ -58,6 +67,10 @@ module EditorjsRails
           caption: @caption,
           credit: @credit
         }
+      end
+
+      def truthy?(value)
+        value == true || value == "true" || value == 1 || value == "1"
       end
     end
   end

@@ -12,7 +12,7 @@ module EditorjsRails
 
       variants %w[title-above title-right title-overlap], default: "title-above"
 
-      attr_reader :title, :title_tag, :image_url, :image_alt, :image_caption, :image_credit, :image_id
+      attr_reader :title, :title_tag, :image_url, :image_alt, :image_caption, :image_credit, :image_id, :image_bordered, :image_background
 
       TITLE_TAGS = %w[h1 h2].freeze
 
@@ -26,6 +26,8 @@ module EditorjsRails
         @image_caption = (image_data[:caption] || image_data["caption"]).to_s
         @image_credit = (image_data[:credit] || image_data["credit"]).to_s
         @image_id = image_data[:id] || image_data["id"]
+        @image_bordered = truthy?(image_data[:bordered] || image_data["bordered"])
+        @image_background = truthy?(image_data[:background] || image_data["background"])
       end
 
       def to_html
@@ -48,12 +50,19 @@ module EditorjsRails
         return "" if @image_url.strip.empty?
 
         id_attr = @image_id ? %( data-image-id="#{escape_html(@image_id)}") : ""
-        figure = %(<figure class="#{BASE_CLASS}__figure">)
+        classes = ["#{BASE_CLASS}__figure"]
+        classes << "editorjs-image--bordered" if @image_bordered
+        classes << "editorjs-image--background" if @image_background
+        figure = %(<figure class="#{classes.join(' ')}">)
         figure += %(<img src="#{escape_html(@image_url)}" alt="#{escape_html(@image_alt)}"#{id_attr}>)
         figure += %(<figcaption class="#{BASE_CLASS}__caption">#{sanitize_inline(@image_caption)}</figcaption>) unless @image_caption.strip.empty?
         figure += %(<figcaption class="#{BASE_CLASS}__credit">#{sanitize_inline(@image_credit)}</figcaption>) unless @image_credit.strip.empty?
         figure += %(</figure>)
         figure
+      end
+
+      def truthy?(value)
+        value == true || value == "true" || value == 1 || value == "1"
       end
 
       def validate
@@ -63,7 +72,11 @@ module EditorjsRails
       end
 
       def data_to_h
-        image = { url: @image_url, alt: @image_alt, caption: @image_caption, credit: @image_credit }
+        image = {
+          url: @image_url, alt: @image_alt,
+          caption: @image_caption, credit: @image_credit,
+          bordered: @image_bordered, background: @image_background
+        }
         image[:id] = @image_id if @image_id
         {
           variant: @variant,
